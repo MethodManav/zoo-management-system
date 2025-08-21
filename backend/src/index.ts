@@ -33,4 +33,4 @@ class Server {
   }
 }
 
-const ServerStart = new Server();
+new Server();
