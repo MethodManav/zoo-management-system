@@ -12,9 +12,21 @@ export class VisitorRoutes extends CommonRouteConfig {
     this.app.get(`${this.path}`, (req, res) => {
       res.send(`Welcome to the ${this.name} route`);
     });
+    /**
+     * Create a new visitor ticket
+     * @param req
+     * @param res
+     * @returns
+     * 201 - Ticket created successfully
+     * 400 - Validation error
+     * 409 - Ticket already exists
+     * 500 - Internal server error
+     *
+     */
     this.app.post(`${this.path}`, (req, res) => {
       visitorController.createVisitorTicket(req, res);
     });
+    
 
     return this.app;
   }
