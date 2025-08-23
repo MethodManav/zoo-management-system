@@ -3,7 +3,7 @@ import z from "zod";
 
 export const AnimalValidation = z.object({
   name: z.string().min(2).max(100),
-  habitats: z.array(z.string().min(2).max(100)),
+  habitat: z.enum(["terrestrial", "aquatic", "aerial"]),
   weight: z.number().min(0).optional(),
   height: z.number().min(0).optional(),
   age: z.number().min(0).optional(),
@@ -20,9 +20,15 @@ type Animal = z.infer<typeof AnimalValidation>;
 
 export interface IAnimalDoc extends Animal, Document {}
 
+export enum AnimalHabitat {
+  TERRESTRIAL = "terrestrial",
+  AQUATIC = "aquatic",
+  AERIAL = "aerial",
+}
+
 const AnimalSchemaMongoose = new Schema({
   name: { type: String, required: true, minlength: 2, maxlength: 100 },
-  habitats: { type: [String], required: true, minlength: 2, maxlength: 100 },
+  habitat: { type: String, enum: Object.values(AnimalHabitat), required: true },
   weight: { type: Number, min: 0, required: false },
   height: { type: Number, min: 0, required: false },
   age: { type: Number, min: 0, required: false },
