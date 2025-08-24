@@ -28,14 +28,17 @@ const BookingTicket = () => {
     setMessage("");
 
     try {
-      const response = await axios.post(`https://zoo-management-system.onrender.com/admin/login/visitor`, {
-        name: name,
-        mobile: phone,
-        memberOfFamily: Number(numVisitors),
-        visitorType: visitorType,
-        dateOfBooking: visitDate,
-        amount: FIXED_TICKET_PRICE * Number(numVisitors),
-      });
+      const response = await axios.post(
+        `https://zoo-management-system.onrender.com/visitor`,
+        {
+          name: name,
+          mobile: phone,
+          memberOfFamily: Number(numVisitors),
+          visitorType: visitorType,
+          dateOfBooking: visitDate,
+          amount: FIXED_TICKET_PRICE * Number(numVisitors),
+        }
+      );
       if (response.status === 200) {
         setMessage(
           "Booking successful on " +
