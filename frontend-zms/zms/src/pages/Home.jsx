@@ -4,39 +4,48 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
     return (
     <>
-        <div className="text-center my-4">
-          <h1 class="text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-  Hello,
-</h1>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+        <div className="text-center m-auto p-20 space-y-4">
+          
+            <h1 className="text-7xl bg-clip-text text-[#FF8999]">
                 Welcome to Zoo Explorer !!
             </h1>
-            <p className="text-lg bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+            <p className="text-2xl text-[##777]">
                 Discover the wonders of wildlife, one adventure at a time.
             </p>
+
         </div>
 
-      <div className="flex flex-col justify-center items-center m-8 gap-4">
-  {/* Box 1 */}
-  <Link 
-    to="/admin"
-    className="flex items-center justify-center w-40 h-20 border-2 border-purple-500 text-purple-500 font-semibold rounded-lg hover:bg-purple-500 hover:text-white transition-colors duration-300"
-  >
-    Admin
-  </Link>
+        <div className="flex flex-row justify-center items-center m-8 gap-4">
+              <div className="p-[4rem] rounded-lg  ">
+                <Link to="/admin"
+                className="flex flex-col items-center justify-center bg-white font-semibold rounded-lg text-pink-500 
+                    border border-black transition-all duration-300 hover:bg-gradient-to-b hover:from-purple-300 hover:to-pink-300 hover:text-black"
+                >
+                    <p className="text-sm text-black w-60 h-60 p-[2rem]">
+                        Manage animals, tickets, and zoo operations
+                    </p>
 
-  {/* Vertical line */}
-  <div className="w-0.5 h-4/5 bg-purple-500"></div>
+                    Admin
+                
+                </Link>
+              </div>
 
-  {/* Box 2 */}
-  <Link 
-    to="/booking"
-    className="flex items-center justify-center w-40 h-20 border-2 border-pink-500 text-pink-500 font-semibold rounded-lg hover:bg-pink-500 hover:text-white transition-colors duration-300"
-  >
-    Booking
-  </Link>
-</div>
+              <div className="w-px h-60 bg-black"></div>
 
+                <div className="p-[4rem] rounded-lg ">
+                    <Link to="/booking"
+                    className="flex flex-col items-center justify-center bg-white font-semibold rounded-lg text-pink-500 
+                        border border-black transition-all duration-300 hover:bg-gradient-to-b hover:from-purple-300 hover:to-pink-300 hover:text-black"
+                    >
+                        <p className="text-sm text-black w-60 h-60 p-[2rem]">
+                            Reserve your tickets and plan your visit easily.
+                        </p>
+
+                        Book Your Tickets
+                    
+                </Link>
+                </div>
+        </div>
 
     </>
   );
