@@ -4,6 +4,7 @@ import expressWinston from "express-winston";
 import { logger, LoggerConfiguration } from "./utilies/Logger";
 import setUpRoutes from "./routes/IndexRoutes";
 import { CommonRouteConfig } from "./utilies/CommonRouteConfig";
+import { DatabaseConfig } from "./model/DbConfig";
 
 class Server {
   private app: express.Application;
@@ -43,6 +44,8 @@ class Server {
         colorize: true,
       })
     );
+    const db = new DatabaseConfig();
+    db.connect();
   }
 }
 

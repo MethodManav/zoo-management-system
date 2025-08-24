@@ -1,5 +1,6 @@
 import mongoose, { Connection } from "mongoose";
 import { EnvParser } from "../utilies/Config";
+import { logger } from "../utilies/Logger";
 
 const uri = EnvParser.db_url;
 const dbName = EnvParser.db_app;
@@ -18,13 +19,13 @@ export class DatabaseConfig {
           .listCollections()
           .toArray();
         const collectionNames = collections.map((col) => col.name);
-        console.log(
+        logger.info(
           `Database: ${dbName} is connected with collections: ${collectionNames.join(
             ", "
           )}`
         );
       } else {
-        console.log(
+        logger.warn(
           `Database: ${dbName} is connected, but unable to list collections.`
         );
       }
