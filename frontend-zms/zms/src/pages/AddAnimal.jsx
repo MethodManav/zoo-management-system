@@ -45,7 +45,7 @@ const AddAnimal = () => {
       });
       if (res.ok) {
         setMessage("Animal added successfully!");
-        setTimeout(() => navigate("/hero"), 1200);
+        setTimeout(() => navigate("/hero"), 1000);
       } else {
         setMessage("Failed to add animal.");
       }
@@ -83,6 +83,7 @@ const AddAnimal = () => {
         </button>
         {message && <div className="mt-2 text-center text-sm">{message}</div>}
       </form>
+      
       <button
         type="button"
         className="mt-4 w-full bg-gray-200 text-black py-2 rounded font-semibold hover:bg-gray-300"

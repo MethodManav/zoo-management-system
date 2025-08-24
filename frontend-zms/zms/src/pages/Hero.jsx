@@ -61,30 +61,26 @@ const Hero = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <AdminNavbar />
-      <div className="flex w-full justify-center items-center ">
+      <div className="flex w-full justify-center items-baseline mt-40 mb-8">
         <h1 className="text-6xl font-bold text-[#FF8999] text-center flex-1">
           Welcome to Zoo, {admin}!
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div className="flex flex-row justify-center items-stretch gap-8">
         {animals.map((animal) => (
-          <div
-            key={animal.id}
-            onClick={() => handleAnimalClick(animal)}
-            className="flex flex-col items-center bg-pink-50 rounded-lg p-6 shadow w-64 cursor-pointer"
-          >
-            <img
-              src={animal.image}
-              alt={animal.name}
-              className="w-40 h-40 object-cover rounded mb-4"
-            />
+          <div key={animal.id} onClick={() => handleAnimalClick(animal)}
+            className="flex flex-col items-center bg-pink-50 rounded-lg p-6 shadow w-64 cursor-pointer">
+            <img src={animal.image} alt={animal.name} className="w-40 h-40 object-cover rounded mb-4"/>
+
             <div className="text-xl font-bold text-[#FF8999]">
               {animal.name}
             </div>
+
             <div className="text-md text-gray-700">
               Type of Animal: {animal.type}
             </div>
+            
             <div className="text-md text-gray-700">Meal: {animal.meal}</div>
           </div>
         ))}
