@@ -10,4 +10,5 @@ export const EnvParser = {
     region: process.env.S3_REGION as string,
     bucketName: process.env.S3_BUCKET_NAME as string,
   },
+  jwt_secret: process.env.JWT_SECRET as string,
 };
