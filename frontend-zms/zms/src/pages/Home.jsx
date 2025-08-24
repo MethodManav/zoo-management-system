@@ -5,6 +5,9 @@ const HomePage = () => {
     return (
     <>
         <div className="text-center my-4">
+          <h1 class="text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+  Hello,
+</h1>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                 Welcome to Zoo Explorer !!
             </h1>
