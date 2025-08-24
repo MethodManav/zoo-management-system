@@ -5,6 +5,8 @@ import AnimalModel, {
 } from "../model/AnimalModel";
 import { sendResponse } from "../utilies/SendResponse";
 import { logger } from "../utilies/Logger";
+import { S3Config } from "../utilies/S3Config";
+import { EnvParser } from "../utilies/Config";
 export class AnimalController {
   async createAnimal(req: Request, res: Response): Promise<void> {
     const { body } = req;
@@ -184,5 +186,56 @@ export class AnimalController {
         data: {},
       });
     }
+  }
+
+  async uploadAnimalImage(req: Request, res: Response): Promise<string> {
+    const { file } = req;
+    const s3Client = new S3Config(
+      EnvParser.s3.accessKeyId,
+      EnvParser.s3.secretAccessKey,
+      EnvParser.s3.region,
+      EnvParser.s3.bucketName
+    );
+    if (!file) {
+      logger.error("No file uploaded");
+      sendResponse({
+        res,
+        statusCode: 400,
+        success: false,
+        message: "No file uploaded",
+        data: {},
+      });
+      return "No file uploaded";
+    }
+    const s3Instance = s3Client.getS3Instance();
+    const uploadParams = {
+      Bucket: EnvParser.s3.bucketName,
+      Key: `${Date.now()}_${file.originalname}`,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    };
+    const uploadResult = await s3Instance.upload(uploadParams).promise();
+    if (!uploadResult) {
+      logger.error("Error uploading file to S3");
+      sendResponse({
+        res,
+        statusCode: 500,
+        success: false,
+        message: "Error uploading file to S3",
+        data: {},
+      });
+      return "Error uploading file to S3";
+    }
+
+    logger.info("File uploaded successfully");
+    const key = uploadResult.Key;
+    sendResponse({
+      res,
+      statusCode: 200,
+      success: true,
+      message: "File uploaded successfully",
+      data: { key },
+    });
+    return "File uploaded successfully";
   }
 }

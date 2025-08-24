@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { CommonRouteConfig } from "../utilies/CommonRouteConfig";
 import { AnimalController } from "../controller/AnimalController";
+import { uploadMiddleware } from "../middleware/multer";
 export class AnimalRoute extends CommonRouteConfig {
   constructor(app: express.Application) {
     super(app, "/animals", "AnimalRoute");
@@ -9,6 +10,7 @@ export class AnimalRoute extends CommonRouteConfig {
 
   configureRoutes(): express.Application {
     const animalController = new AnimalController();
+
     /**
      * Get all animals
      * @param req
@@ -21,6 +23,7 @@ export class AnimalRoute extends CommonRouteConfig {
     this.app.get(`${this.path}`, (req: Request, res: Response) => {
       animalController.getAllAnimals(req, res);
     });
+
     /**
      * Create a new animal
      * @param req
@@ -35,6 +38,7 @@ export class AnimalRoute extends CommonRouteConfig {
     this.app.post(`${this.path}`, (req: Request, res: Response) => {
       animalController.createAnimal(req, res);
     });
+
     /**
      * Get a single animal by ID
      * @param req
@@ -48,6 +52,7 @@ export class AnimalRoute extends CommonRouteConfig {
     this.app.get(`${this.path}/:id`, (req: Request, res: Response) => {
       animalController.getAnimalById(req, res);
     });
+
     /**
      * Update an existing animal
      * @param req
@@ -62,6 +67,7 @@ export class AnimalRoute extends CommonRouteConfig {
     this.app.put(`${this.path}/:id`, (req: Request, res: Response) => {
       animalController.updateAnimal(req, res);
     });
+
     /**
      * Delete an existing animal
      * @param req
@@ -75,6 +81,25 @@ export class AnimalRoute extends CommonRouteConfig {
     this.app.delete(`${this.path}/:id`, (req: Request, res: Response) => {
       animalController.deleteAnimal(req, res);
     });
+
+    /**
+     * Upload Animal Image to S3
+     * @param req
+     * @param res
+     * @returns
+     * 200 - Image uploaded successfully
+     * 400 - Validation error
+     * 404 - Animal not found
+     * 500 - Internal server error
+     *
+     */
+    this.app.post(
+      `${this.path}/image`,
+      uploadMiddleware.upload.single("image"),
+      (req: Request, res: Response) => {
+        animalController.uploadAnimalImage(req, res);
+      }
+    );
     return this.app;
   }
 }
