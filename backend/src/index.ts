@@ -11,16 +11,20 @@ class Server {
   constructor() {
     this.app = express();
     this.configureMiddleware();
-    this.start(3000);
+    this.configureRoutes();
+    this.start(5000);
   }
 
   public start(port: number) {
     this.app.listen(port, () => {
       logger.info(`Server is running on port ${port}`);
-      const routes = setUpRoutes(this.app);
-      routes.forEach((route: CommonRouteConfig) => {
-        logger.info(`Routes configured for ${route.getName()}`);
-      });
+    });
+  }
+
+  public configureRoutes() {
+    const routes = setUpRoutes(this.app);
+    routes.forEach((route: CommonRouteConfig) => {
+      logger.info(`Routes configured for ${route.getName()}`);
     });
   }
 
@@ -29,8 +33,17 @@ class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
-    this.app.use(expressWinston.logger(LoggerConfiguration));
+
+    this.app.use(
+      expressWinston.logger({
+        winstonInstance: logger,
+        meta: false,
+        msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms",
+        expressFormat: false,
+        colorize: true,
+      })
+    );
   }
 }
 
-const ServerStart = new Server();
+new Server();
